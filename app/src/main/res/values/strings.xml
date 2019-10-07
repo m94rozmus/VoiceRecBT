@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">VoiceRecBT</string>
+    <string name="simple_text">SIMPLE TEXT</string>
 </resources>

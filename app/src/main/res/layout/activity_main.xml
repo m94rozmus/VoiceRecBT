@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="SIMPLE TEXT"
+                android:text="@string/simple_text"
                 android:textSize="@android:dimen/app_icon_size">
             </TextView>
         </LinearLayout>

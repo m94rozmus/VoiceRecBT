@@ -15,13 +15,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
-    public ListView wordRecognitionResultList;
     public ListView devicesResultList;
     public Map<String, String> devicesResultMap = new HashMap();
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
@@ -83,13 +80,12 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK) {
             ArrayList results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
-            if (results.contains("pair")) {
-                command.setText("pair");
+            if (results.contains("sparuj")) {
+                command.setText("SPARUJ");
                 getPairedDevices();
             } else if (results.contains("")) {
 
             }
         }
-
     }
 }
