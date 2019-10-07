@@ -10,15 +10,22 @@ import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
-    public ListView resultList;
+    public ListView wordRecognitionResultList;
+    public ListView devicesResultList;
+    public Map<String, String> devicesResultMap = new HashMap();
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
+    public TextView command;
 
     private BluetoothAdapter bluetoothAdapter = null;
     private Set<BluetoothDevice> pairedDevicesSet;
@@ -27,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        resultList = (ListView) findViewById(R.id.txvResult);
+        devicesResultList = (ListView) findViewById(R.id.devicesResultList);
+        command = (TextView) findViewById(R.id.voiceRecognitionResult);
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter == null) {
@@ -37,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             Intent turnOnBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(turnOnBT, 1);
         }
+        getPairedDevices();
     }
 
     private void getPairedDevices() {
@@ -46,13 +55,14 @@ public class MainActivity extends AppCompatActivity {
         if (pairedDevicesSet.size() > 0) {
             for (BluetoothDevice bluetoothDevice : pairedDevicesSet) {
                 devicesList.add(bluetoothDevice.getName().toString());
+                devicesResultMap.put(bluetoothDevice.getName().toString(), bluetoothDevice.getAddress().toString());
             }
         } else {
             Toast.makeText(getApplicationContext(), "No paired devices", Toast.LENGTH_LONG).show();
         }
 
         final ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, devicesList);
-        resultList.setAdapter(arrayAdapter);
+        devicesResultList.setAdapter(arrayAdapter);
     }
 
     public void getSpeechInput(View view) {
@@ -71,11 +81,13 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK) {
-            ArrayList matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            resultList.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, matches));
+            ArrayList results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
-            if (matches.contains("pair")) {
+            if (results.contains("pair")) {
+                command.setText("pair");
                 getPairedDevices();
+            } else if (results.contains("")) {
+
             }
         }
 
