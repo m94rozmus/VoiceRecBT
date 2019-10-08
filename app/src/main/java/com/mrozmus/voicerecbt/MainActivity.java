@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private BluetoothSocket bluetoothSocket = null;
 
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    private boolean isBluetoothConnected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +82,9 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
     }
 
-    public boolean containsIgnoreCase(String str, ArrayList<String> list) {
-        for(String item : list){
-            if(item.equalsIgnoreCase(str))
+    public boolean containsIgnoreCase(String str, ArrayList<String> statementsList) {
+        for(String statement : statementsList){
+            if(statement.equalsIgnoreCase(str))
                 return true;
         }
         return false;
@@ -133,11 +134,14 @@ public class MainActivity extends AppCompatActivity {
                 if(false == sendMsg("SALON", "C")){
                     Log.d("myTag", "Unsecessfull");
                 }
-            } else if(containsIgnoreCase("salon połącz", results)) {
-                if(false == connectDevice("SALON")){
-                    Log.d("mTag", "nie udało się");
-                }
+            } else if(containsIgnoreCase("salon", results)) {
+                String address = devicesResultMap.get("SALON");
+
+                Intent intent = new Intent(MainActivity.this, ControlDevice.class);
+                intent.putExtra("EXTRA_ADDRESS", address);
+                startActivity(intent);
             }
         }
     }
+
 }
