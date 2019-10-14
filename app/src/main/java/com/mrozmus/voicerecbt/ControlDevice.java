@@ -6,11 +6,13 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -25,7 +27,7 @@ public class ControlDevice extends AppCompatActivity {
     private BluetoothSocket bluetoothSocket = null;
     private BluetoothAdapter bluetoothAdapter = null;
     private boolean bluetoothConnected = false;
-    private UUID myUUID = UUID.randomUUID();
+    static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
 
     @Override
@@ -136,6 +138,8 @@ public class ControlDevice extends AppCompatActivity {
 
             progressBar.setVisibility(View.GONE);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            LinearLayout linearLayout = (LinearLayout)findViewById(R.id.linearLayout);
+            linearLayout.setBackground();
         }
     }
 }
