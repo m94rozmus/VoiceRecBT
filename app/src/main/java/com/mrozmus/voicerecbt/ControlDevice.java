@@ -10,9 +10,14 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+<<<<<<< HEAD
 import android.widget.LinearLayout;
+=======
+import android.widget.Button;
+>>>>>>> dcbbd8c956a7ee18f9bb1515d5f8061332f7cd67
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -22,12 +27,18 @@ import java.util.UUID;
 
 public class ControlDevice extends AppCompatActivity {
 
+    Button button;
+
     String address = null;
     private ProgressBar progressBar;
     private BluetoothSocket bluetoothSocket = null;
     private BluetoothAdapter bluetoothAdapter = null;
     private boolean bluetoothConnected = false;
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+<<<<<<< HEAD
+=======
+
+>>>>>>> dcbbd8c956a7ee18f9bb1515d5f8061332f7cd67
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
 
     @Override
@@ -37,10 +48,22 @@ public class ControlDevice extends AppCompatActivity {
         Intent intent = getIntent();
         address = intent.getStringExtra("EXTRA_ADDRESS");
 
+        Log.d("TAG", address);
+
         setContentView(R.layout.activity_control_device);
         progressBar = (ProgressBar)findViewById(R.id.progress_circular);
 
+        button = (Button) findViewById(R.id.button);
+
         new ConnectBluetoothDevice().execute();
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                sendMsg("1");
+            }
+        });
+
     }
 
     public void getSpeechInput(View view){
@@ -67,10 +90,18 @@ public class ControlDevice extends AppCompatActivity {
         if(requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK){
             ArrayList results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
-            if(containsIgnoreCase("włącz", results)){
-                sendMsg("Y");
-            } else if(containsIgnoreCase("wyłącz", results)){
-                sendMsg("N");
+            if(containsIgnoreCase("wyłącz zielone", results)){
+                sendMsg("1");
+            } else if(containsIgnoreCase("włącz zielone", results)) {
+                sendMsg("2");
+            } else if(containsIgnoreCase("wyłącz żółte", results)) {
+                sendMsg("3");
+            } else if(containsIgnoreCase("włącz żółte", results)) {
+                sendMsg("4");
+            } else if(containsIgnoreCase("wyłącz czerwone", results)) {
+                sendMsg("5");
+            } else if(containsIgnoreCase("włącz czerwone", results)) {
+                sendMsg("6");
             } else if(containsIgnoreCase("rozłącz", results)){
                 disconnectBluetoothDevice();
             }
@@ -116,9 +147,11 @@ public class ControlDevice extends AppCompatActivity {
                     BluetoothDevice bluetoothDevice = bluetoothAdapter.getRemoteDevice(address);
                     bluetoothSocket = bluetoothDevice.createInsecureRfcommSocketToServiceRecord(myUUID);
                     BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
+                    Log.d("tag", "tutaj");
                     bluetoothSocket.connect();
                 }
             } catch (IOException e) {
+                Log.d("error", e.getMessage());
                 connectionFailure = true;
             }
             return null;
