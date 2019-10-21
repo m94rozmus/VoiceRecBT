@@ -6,18 +6,13 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-<<<<<<< HEAD
-import android.widget.LinearLayout;
-=======
 import android.widget.Button;
->>>>>>> dcbbd8c956a7ee18f9bb1515d5f8061332f7cd67
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -27,7 +22,14 @@ import java.util.UUID;
 
 public class ControlDevice extends AppCompatActivity {
 
-    Button button;
+    Button greenOff;
+    Button greenOn;
+    Button yellowOff;
+    Button yellowOn;
+    Button redOff;
+    Button redOn;
+    Button disconnect;
+
 
     String address = null;
     private ProgressBar progressBar;
@@ -35,10 +37,7 @@ public class ControlDevice extends AppCompatActivity {
     private BluetoothAdapter bluetoothAdapter = null;
     private boolean bluetoothConnected = false;
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-<<<<<<< HEAD
-=======
 
->>>>>>> dcbbd8c956a7ee18f9bb1515d5f8061332f7cd67
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
 
     @Override
@@ -53,17 +52,59 @@ public class ControlDevice extends AppCompatActivity {
         setContentView(R.layout.activity_control_device);
         progressBar = (ProgressBar)findViewById(R.id.progress_circular);
 
-        button = (Button) findViewById(R.id.button);
+        greenOff = (Button) findViewById(R.id.greenOff);
+        greenOn = (Button) findViewById(R.id.greenOn);
+        yellowOff = (Button) findViewById(R.id.yellowOff);
+        yellowOn = (Button) findViewById(R.id.yellowOn);
+        redOff = (Button) findViewById(R.id.redOff);
+        redOn = (Button) findViewById(R.id.redOn);
+        disconnect = (Button) findViewById(R.id.disconnect);
+
 
         new ConnectBluetoothDevice().execute();
 
-        button.setOnClickListener(new View.OnClickListener() {
+        greenOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
                 sendMsg("1");
             }
         });
-
+        greenOn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                sendMsg("2");
+            }
+        });
+        yellowOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                sendMsg("3");
+            }
+        });
+        yellowOn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                sendMsg("4");
+            }
+        });
+        redOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                sendMsg("5");
+            }
+        });
+        redOn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                sendMsg("6");
+            }
+        });
+        disconnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                disconnectBluetoothDevice();
+            }
+        });
     }
 
     public void getSpeechInput(View view){
@@ -171,8 +212,6 @@ public class ControlDevice extends AppCompatActivity {
 
             progressBar.setVisibility(View.GONE);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-            LinearLayout linearLayout = (LinearLayout)findViewById(R.id.linearLayout);
-            linearLayout.setBackground();
         }
     }
 }

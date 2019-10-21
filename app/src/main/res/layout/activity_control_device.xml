@@ -24,35 +24,40 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/greenOff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Green Off" />
         <Button
-            android:id="@+id/button"
+            android:id="@+id/greenOn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Green On" />
         <Button
-            android:id="@+id/button"
+            android:id="@+id/yellowOff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Yellow Off" />
         <Button
-            android:id="@+id/button"
+            android:id="@+id/yellowOn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Yellow On" />
         <Button
-            android:id="@+id/button"
+            android:id="@+id/redOff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Red Off" />
+        <Button
+            android:id="@+id/redOn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Red On" />
         <Button
-            android:id="@+id/button"
+            android:id="@+id/disconnect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Red Off" />
+            android:text="Disconnect" />
 
     </LinearLayout>
     <ImageView
